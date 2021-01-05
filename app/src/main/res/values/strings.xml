@@ -3,7 +3,7 @@
     <string name="Nombre_usuario">Nombre</string>
     <string name="Contraseña">Contraseña</string>
     <string name="BotonRegistrar">Registrar</string>
-    <string name="BotonInicioSesion">Inicio</string>
+    <string name="BotonInicioSesion">Ingresar</string>
     <string name="app_nameCD">Controlador de Dispensador</string>
     <string name="PantallaInformación">Información</string>
     <string name="BotonIniciar">Iniciar</string>

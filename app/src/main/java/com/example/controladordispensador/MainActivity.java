@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etnombre, etcontraseña;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
