@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name"></string>
     <string name="app_nameIS">Inicio de sesión</string>
     <string name="Nombre_usuario">Nombre</string>
     <string name="Contraseña">Contraseña</string>
@@ -9,4 +8,5 @@
     <string name="PantallaInformación">Información</string>
     <string name="BotonIniciar">Iniciar</string>
     <string name="BotonCerrarSesion">Cerrar sesión</string>
+    <string name="logo">Logo</string>
 </resources>
