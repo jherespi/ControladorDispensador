@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "337581359701",
+    "project_id": "autodispensador",
+    "storage_bucket": "autodispensador.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337581359701:android:a72f656a88f02d5e374adc",
+        "android_client_info": {
+          "package_name": "com.example.controladordispensador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337581359701-sjvchoqjabdbb105mtio8i72cku1ctjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.controladordispensador",
+            "certificate_hash": "95c9adf7bf413f381b70c3984dc216c4069dd766"
+          }
+        },
+        {
+          "client_id": "337581359701-v5f3opl6lg5l1c404o099mv34r1kdv68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp8GWwdkekjjYVVSY_gPbxjUXyzfGjxSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337581359701-v5f3opl6lg5l1c404o099mv34r1kdv68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

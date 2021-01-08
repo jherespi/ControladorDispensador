@@ -7,6 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:label="@string/app_nameCD"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".Controlador"
@@ -14,7 +15,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_nameIS"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
