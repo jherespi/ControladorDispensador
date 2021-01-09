@@ -1,6 +1,7 @@
 <resources>
     <string name="app_nameIS">Inicio de sesión</string>
     <string name="Nombre_usuario">Nombre</string>
+    <string name="Email">Correo</string>
     <string name="Contraseña">Contraseña</string>
     <string name="BotonRegistrar">Registrar</string>
     <string name="BotonInicioSesion">Ingresar</string>
