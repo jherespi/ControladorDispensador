@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Registro extends AppCompatActivity {
@@ -61,13 +63,43 @@ public class Registro extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    finish();
+                    enviarCorreoVerificacion();
+                    //FirebaseUser user = mAuth.getCurrentUser();
+                    //finish();
                     //updateUI(user);
                 }else{
                     Toast.makeText(getApplicationContext(), "No se pudo registrar este usuario, intentelo nuevamente", Toast.LENGTH_LONG).show();
                 }
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if(e instanceof FirebaseAuthUserCollisionException){//Excepción para verificar si el correo ya se encuentra en uso
+                    etCorreo.setError("El correo ya está registrado");
+                    etCorreo.requestFocus();
+                }else{
+                    Toast.makeText(Registro.this, "Opps, hubo un problema", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+    }
+
+    private void enviarCorreoVerificacion() {
+        if(mAuth.getCurrentUser() != null){
+            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(Registro.this, "Un mensaje ha sido enviado a tu dirección de correo", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(Registro.this, "Error al enviar el mensaje", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    public void volver(View view){
+        finish();
     }
 }

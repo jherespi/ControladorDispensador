@@ -10,4 +10,5 @@
     <string name="BotonIniciar">Iniciar</string>
     <string name="BotonCerrarSesion">Cerrar sesión</string>
     <string name="logo">Logo</string>
+    <string name="Volver">Volver</string>
 </resources>

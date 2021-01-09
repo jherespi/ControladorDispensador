@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         etCorreo =(EditText)findViewById(R.id.txt_correoLog);
         etcontrasena = (EditText)findViewById(R.id.txt_password);
     }
