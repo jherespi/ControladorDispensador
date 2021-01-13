@@ -11,4 +11,6 @@
     <string name="BotonCerrarSesion">Cerrar sesión</string>
     <string name="logo">Logo</string>
     <string name="Volver">Volver</string>
+    <string name="dispositivos_vinculados">Dispositivos vinculados</string>
+    <string name="enviar">Enviar</string>
 </resources>

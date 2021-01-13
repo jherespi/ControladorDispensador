@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
+
                                 Intent iniciosesion = new Intent(MainActivity.this, Controlador.class);
-                                iniciosesion.putExtra("nombre",user.getDisplayName());
+                                iniciosesion.putExtra("id",user.getUid());
                                 startActivity(iniciosesion);
                                 //updateUI(user);
                             } else {

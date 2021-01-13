@@ -32,7 +32,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded"
-        android:onClick="mostrarInformacion"
+        android:onClick="recogerDatos"
         android:text="@string/BotonIniciar"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
