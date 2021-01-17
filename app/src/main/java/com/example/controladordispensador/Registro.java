@@ -58,7 +58,7 @@ public class Registro extends AppCompatActivity {
     }
     //Realiza el registro en la base de datos firebase
     private void registrarUsers(){
-        mAuth.createUserWithEmailAndPassword(password, password2).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.createUserWithEmailAndPassword(correo, password2).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
