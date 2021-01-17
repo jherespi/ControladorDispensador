@@ -12,15 +12,21 @@
         android:label="@string/app_nameCD"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".dispositivos_vinculados"></activity>
-        <activity android:name=".Registro"></activity>
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".dispositivos_vinculados"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Registro"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Controlador"
-            android:label="@string/app_nameCD"></activity>
+            android:label="@string/app_nameCD"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
