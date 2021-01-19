@@ -15,7 +15,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +29,9 @@ public class Registro extends AppCompatActivity {
     private String correo, password, password2;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
+    private FirebaseUser currentUser;
+    private static int id;
+    private String nombre = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +41,14 @@ public class Registro extends AppCompatActivity {
         etPassword = (EditText)findViewById(R.id.txt_password2);
         etPassword2 = (EditText)findViewById(R.id.txt_password3);
         mAuth = FirebaseAuth.getInstance();
+        myRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
     }
     //Recoje los datos para el registro
@@ -48,6 +56,14 @@ public class Registro extends AppCompatActivity {
         correo = etCorreo.getText().toString();
         password = etPassword.getText().toString();
         password2 = etPassword2.getText().toString();
+
+        for(char letra: correo.toCharArray()){
+            if(letra != '@'){
+                nombre += letra;
+            }else{
+                break;
+            }
+        }
 
         if(!correo.isEmpty() || !password.isEmpty() || !password2.isEmpty()){
             if(password2.length() >= 6 && password.length() >=6){
@@ -64,26 +80,17 @@ public class Registro extends AppCompatActivity {
     //Realiza el registro en la base de datos firebase
     private void registrarUsers(){
         mAuth.createUserWithEmailAndPassword(correo, password2).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
                     enviarCorreoVerificacion();
-                    String nombre = "";
-                    for(char letra: correo.toCharArray()){
-                        if(letra != '@'){
-                            nombre += letra;
-                        }
-                    }
+                    //Agrega a base de datos
                     Map<String, Object> usuario = new HashMap<>();
-                    usuario.put("nombre",nombre);
-                    Map<String, Object> dispensador = new HashMap<>();
-                    dispensador.put("Usos disponibles", "100");
-                    myRef.child("Usuarios").push().setValue(usuario);
+                    usuario.put("nombre", nombre);
+                    myRef.child("Usuarios").child(currentUser.getUid()).setValue(usuario);
 
-                    //FirebaseUser user = mAuth.getCurrentUser();
-                    //finish();
-                    //updateUI(user);
                 }else{
                     Toast.makeText(getApplicationContext(), "No se pudo registrar este usuario, intentelo nuevamente", Toast.LENGTH_LONG).show();
                 }
