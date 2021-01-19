@@ -6,8 +6,9 @@ public class Usuario {
     String nombre;
     Dispensador dispensador;
 
-    public Usuario(int id, Dispensador dispensador){
+    public Usuario(int id, String nombre, Dispensador dispensador){
         this.id = id;
+        this.nombre = nombre;
         this.dispensador = dispensador;
     }
 
