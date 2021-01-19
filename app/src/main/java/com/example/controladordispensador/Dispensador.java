@@ -14,11 +14,11 @@ public class Dispensador {
         return id;
     }
     public String getNombre(){
-        return nombre;
+        return this.nombre;
     }
 
     public int getNum_usos(){
-        return num_usos;
+        return this.num_usos;
     }
 
     public void setNum_usos(Integer num_usos){

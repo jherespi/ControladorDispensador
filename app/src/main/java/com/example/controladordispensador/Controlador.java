@@ -79,7 +79,7 @@ public class Controlador extends AppCompatActivity {
     }
 
     public void mostrarInformacion(Usuario usuario){
-        String string = "\n" +
+        String string = "Usuario: " + usuario.getNombre() +"\n" +
                         "Dispensador: " + usuario.getDispensador().getNombre() + "\n" +
                         "Número de usos disponobles: " + usuario.getDispensador().getNum_usos();
         tvinformacion.setText(string);

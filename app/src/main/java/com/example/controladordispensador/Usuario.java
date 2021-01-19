@@ -3,6 +3,7 @@ package com.example.controladordispensador;
 
 public class Usuario {
     int id;
+    String nombre;
     Dispensador dispensador;
 
     public Usuario(int id, Dispensador dispensador){
@@ -15,6 +16,10 @@ public class Usuario {
     }
 
     public Dispensador getDispensador(){
-        return dispensador;
+        return this.dispensador;
+    }
+
+    public String getNombre(){
+        return this.nombre;
     }
 }
