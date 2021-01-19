@@ -39,12 +39,14 @@ public class Controlador extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controlador);
         mAuth = FirebaseAuth.getInstance();
-        Toast.makeText(this, "Bienvenido usuario con id: " + getIntent().getExtras().getString("id"),Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Bienvenido usuario con id: " + getIntent().getExtras().getString("id"),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Bienvenido: " + usuario.getNombre(),Toast.LENGTH_LONG).show();
+
         tvinformacion = (TextView)findViewById(R.id.tv_informacion);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        mostrarInformacion(usuario);
+        tvinformacion.setText("Usuario: " + usuario.getNombre());
     }
 
     @Override
@@ -81,7 +83,7 @@ public class Controlador extends AppCompatActivity {
     public void mostrarInformacion(Usuario usuario){
         String string = "Usuario: " + usuario.getNombre() +"\n" +
                         "Dispensador: " + usuario.getDispensador().getNombre() + "\n" +
-                        "Número de usos disponobles: " + usuario.getDispensador().getNum_usos();
+                        "Número de usos disponibles: " + usuario.getDispensador().getNum_usos();
         tvinformacion.setText(string);
     }
 
