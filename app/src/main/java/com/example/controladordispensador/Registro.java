@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +31,6 @@ public class Registro extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
-    private static int id;
     private String nombre = "";
 
     @Override
@@ -87,9 +87,14 @@ public class Registro extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
                     enviarCorreoVerificacion();
                     //Agrega a base de datos
+                    UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(nombre)
+                            .build();
+                    currentUser.updateProfile(profileUpdate);
                     Map<String, Object> usuario = new HashMap<>();
                     usuario.put("nombre", nombre);
                     myRef.child("Usuarios").child(currentUser.getUid()).setValue(usuario);
+
 
                 }else{
                     Toast.makeText(getApplicationContext(), "No se pudo registrar este usuario, intentelo nuevamente", Toast.LENGTH_LONG).show();

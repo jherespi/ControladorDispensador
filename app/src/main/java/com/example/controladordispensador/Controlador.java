@@ -30,24 +30,8 @@ public class Controlador extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
-    Dispensador dispensador = new Dispensador(1, "HC-06",100);
-    Usuario usuario = new Usuario(1, "jherestu",  dispensador);
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_controlador);
-        mAuth = FirebaseAuth.getInstance();
-        //Toast.makeText(this, "Bienvenido usuario con id: " + getIntent().getExtras().getString("id"),Toast.LENGTH_LONG).show();
-        Toast.makeText(this, "Bienvenido: " + usuario.getNombre(),Toast.LENGTH_LONG).show();
-
-        tvinformacion = (TextView)findViewById(R.id.tv_informacion);
-
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        tvinformacion.setText("Usuario: " + usuario.getNombre());
-    }
+    Dispensador dispensador;
+    Usuario usuario;
 
     @Override
     public void onStart() {
@@ -57,27 +41,27 @@ public class Controlador extends AppCompatActivity {
         //updateUI(currentUser);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_controlador);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        //Toast.makeText(this, "Bienvenido usuario con id: " + getIntent().getExtras().getString("id"),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Bienvenido: " + currentUser.getDisplayName(),Toast.LENGTH_LONG).show();
+
+        tvinformacion = (TextView)findViewById(R.id.tv_informacion);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        tvinformacion.setText("Usuario: " + currentUser.getDisplayName());
+    }
+
     public void recogerDatos(View view){
         Intent connectToBT = new Intent(this, dispositivos_vinculados.class);
         startActivity(connectToBT);
-        dispensador.setNum_usos(dispensador.getNum_usos() - 1);
-        mostrarInformacion(usuario);
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                //Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                //Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        //readFromDatabase();
     }
 
     public void mostrarInformacion(Usuario usuario){
@@ -87,29 +71,30 @@ public class Controlador extends AppCompatActivity {
         tvinformacion.setText(string);
     }
 
-    //Envía los registros a la base de datos en firebase
-    public void sendToDataBase(Usuario usuario){
-        myRef.child(String.valueOf(usuario.getId())).child("Dispensadores").child(String.valueOf(usuario.getDispensador().getId())).setValue(usuario.getDispensador());
-    }
-
     public void readFromDatabase(){
         // Read from the database
         myRef.child("Usuarios").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    String nameuser = snapshot.child("nombre").getValue().toString();
-                    String dispensador = snapshot.child("dispensador").child("id").getValue().toString();
-                    int usosdisponibles = Integer.parseInt(snapshot.child("dispensador").child("usosDisponibles").getValue().toString());
+                    String nameuser = snapshot.child("Usuarios").child(currentUser.getUid()).child("nombre").getValue().toString();
+                    String dispensadorf = snapshot.child("Usuarios").child(currentUser.getUid()).child("Dispensadores").child("nombre").getValue().toString();
+                    int usosdisponibles = Integer.parseInt(snapshot.child("Usuarios").child(currentUser.getUid()).child("Dispensadores").child("").child("Usos disponibles").getValue().toString());
+
+                    dispensador = new Dispensador(dispensadorf,usosdisponibles);
+                    dispensador.setNum_usos(dispensador.getNum_usos() - 1);
+                    usuario = new Usuario(nameuser,  dispensador);
                 }
+                Toast.makeText(Controlador.this, "No se puede acceder a la información buscada", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(Controlador.this, "No se encuentra la información buscada", Toast.LENGTH_LONG).show();
             }
         });
     }
+
     public void cerrarSesion(View view){
         mAuth.signOut();
         finish();

@@ -70,6 +70,7 @@ public class dispositivos_vinculados extends ListActivity {
 
     protected void onListItemClick(ListView l, View view, int position, long id){
         BluetoothDevice device = btDeviceArray.get(position);
+
         connectAsyncTask.execute(device);
     }
 

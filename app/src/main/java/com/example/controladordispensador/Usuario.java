@@ -2,18 +2,12 @@ package com.example.controladordispensador;
 
 
 public class Usuario {
-    int id;
     String nombre;
     Dispensador dispensador;
 
-    public Usuario(int id, String nombre, Dispensador dispensador){
-        this.id = id;
+    public Usuario(String nombre, Dispensador dispensador){
         this.nombre = nombre;
         this.dispensador = dispensador;
-    }
-
-    public int getId(){
-        return id;
     }
 
     public Dispensador getDispensador(){
