@@ -31,7 +31,7 @@ public class Controlador extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
     Dispensador dispensador = new Dispensador(1, "HC-06",100);
-    Usuario usuario = new Usuario(1, dispensador);
+    Usuario usuario = new Usuario(1, "jherestu",  dispensador);
 
 
     @Override
