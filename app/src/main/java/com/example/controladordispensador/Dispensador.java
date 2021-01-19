@@ -1,23 +1,27 @@
 package com.example.controladordispensador;
 
 public class Dispensador {
-    int id;
-    int num_max_usos, num_usos;
+    int id, num_usos;
+    String nombre;
 
-    public Dispensador(int id, int num_max_usos, int num_usos){
+    public Dispensador(int id, String nombre, int num_usos){
         this.id = id;
-        this.num_max_usos = num_max_usos;
+        this.nombre = nombre;
         this.num_usos = num_usos;
     }
 
     public int getId(){
         return id;
     }
-    public int getNum_max_usos(){
-        return num_max_usos;
+    public String getNombre(){
+        return nombre;
     }
 
     public int getNum_usos(){
         return num_usos;
+    }
+
+    public void setNum_usos(Integer num_usos){
+        this.num_usos = num_usos;
     }
 }

@@ -15,11 +15,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registro extends AppCompatActivity {
     private EditText etCorreo, etPassword, etPassword2;
     private String correo, password, password2;
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,18 @@ public class Registro extends AppCompatActivity {
                 if(task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
                     enviarCorreoVerificacion();
+                    String nombre = "";
+                    for(char letra: correo.toCharArray()){
+                        if(letra != '@'){
+                            nombre += letra;
+                        }
+                    }
+                    Map<String, Object> usuario = new HashMap<>();
+                    usuario.put("nombre",nombre);
+                    Map<String, Object> dispensador = new HashMap<>();
+                    dispensador.put("Usos disponibles", "100");
+                    myRef.child("Usuarios").push().setValue(usuario);
+
                     //FirebaseUser user = mAuth.getCurrentUser();
                     //finish();
                     //updateUI(user);
@@ -84,6 +101,7 @@ public class Registro extends AppCompatActivity {
         });
     }
 
+    //Se envía correo de verificación
     private void enviarCorreoVerificacion() {
         if(mAuth.getCurrentUser() != null){
             mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {

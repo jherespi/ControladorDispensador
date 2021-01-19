@@ -1,5 +1,6 @@
 package com.example.controladordispensador;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
@@ -29,6 +30,8 @@ public class Controlador extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser currentUser;
+    Dispensador dispensador = new Dispensador(1, "HC-06",100);
+    Usuario usuario = new Usuario(1, dispensador);
 
 
     @Override
@@ -40,7 +43,8 @@ public class Controlador extends AppCompatActivity {
         tvinformacion = (TextView)findViewById(R.id.tv_informacion);
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Usuarios");
+        myRef = database.getReference();
+        mostrarInformacion(usuario);
     }
 
     @Override
@@ -54,8 +58,8 @@ public class Controlador extends AppCompatActivity {
     public void recogerDatos(View view){
         Intent connectToBT = new Intent(this, dispositivos_vinculados.class);
         startActivity(connectToBT);
-        //Dispensador dispensador = new Dispensador()
-        //Usuario usuario = new Usuario(currentUser.getUid(),dispensador);
+        dispensador.setNum_usos(dispensador.getNum_usos() - 1);
+        mostrarInformacion(usuario);
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,8 +79,8 @@ public class Controlador extends AppCompatActivity {
     }
 
     public void mostrarInformacion(Usuario usuario){
-        String string = "Usuario: " + usuario.getId() + "\n" +
-                        "Dispensador: " + usuario.getDispensador().getId() + "\n" +
+        String string = "\n" +
+                        "Dispensador: " + usuario.getDispensador().getNombre() + "\n" +
                         "Número de usos disponobles: " + usuario.getDispensador().getNum_usos();
         tvinformacion.setText(string);
     }
@@ -84,6 +88,25 @@ public class Controlador extends AppCompatActivity {
     //Envía los registros a la base de datos en firebase
     public void sendToDataBase(Usuario usuario){
         myRef.child(String.valueOf(usuario.getId())).child("Dispensadores").child(String.valueOf(usuario.getDispensador().getId())).setValue(usuario.getDispensador());
+    }
+
+    public void readFromDatabase(){
+        // Read from the database
+        myRef.child("Usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String nameuser = snapshot.child("nombre").getValue().toString();
+                    String dispensador = snapshot.child("dispensador").child("id").getValue().toString();
+                    int usosdisponibles = Integer.parseInt(snapshot.child("dispensador").child("usosDisponibles").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public void cerrarSesion(View view){
         mAuth.signOut();
